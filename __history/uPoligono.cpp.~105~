@@ -1,0 +1,86 @@
+// ---------------------------------------------------------------------------
+
+#pragma hdrstop
+#include "uPoligono.h"
+#include "uReta.h"
+#include <math.h>
+#include "uCircBresenham.h"
+
+#define ABS(x) ((x < 0) ? -x : x)
+#define _SIGN_(x) ((x < 0) ? (-1) :(1))
+// ---------------------------------------------------------------------------
+#pragma package(smart_init)
+
+double xViewPortToMundo(int x, Janela mundo, Janela viewPort) {
+		return ((x - viewPort.Xmin) / (viewPort.Xmax - viewPort.Xmin)) *
+			(mundo.Xmax - mundo.Xmin) + mundo.Xmin;
+	}
+
+double yViewPortToMundo(int y, Janela mundo, Janela viewPort) {
+		return (1 - ((y - viewPort.Ymin) / (viewPort.Ymax - viewPort.Ymin))) *
+			(mundo.Ymax - mundo.Ymin) + mundo.Ymin;
+	}
+
+// -----------------------------------------------------------------------------
+// VARIAVEIS GLOBAIS
+// -----------------------------------------------------------------------------
+int px0 = 0, py0 = 0, px1 = 0, py1 = 0;
+Circunferencia*circBresenham;
+Reta*reta;
+
+void Poligono::desenha(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta) {
+		reta = new Reta(mundo, vp);
+
+		TColor cor = (tipo == 'E') ? clBlack :
+			(tipo == 'N') ? clRed : clBlue;
+
+		switch (tipoReta) {
+			case 0:
+				reta->lineTo(canvas, pontos, cor);
+				break;
+			case 1:
+				reta->DDA(canvas, pontos, cor);
+				break;
+			case 2:
+				reta->bresenham(canvas, pontos, cor);
+				break;
+			}
+	}
+
+void Poligono::mostrar(TListBox*lbPontos) {
+		lbPontos->Clear();
+		for (int x = 0; x < pontos.size(); x++) {
+				lbPontos->Items->Add(pontos[x].toString());
+			}
+	}
+
+void Poligono::translada(double dx, double dy) {
+		for (int x = 0; x < pontos.size(); x++) {
+				pontos[x].translada(dx, dy);
+			}
+
+	}
+
+void Poligono::escalonamento(double dx, double dy) {
+		for (int x = 0; x < pontos.size(); x++) {
+				pontos[x].escalonamento(dx, dy);
+			}
+	}
+
+void Poligono::reflexao(double dx, double dy) {
+		for (int x = 0; x < pontos.size(); x++) {
+				pontos[x].translada(dx, dy);
+			}
+	}
+
+void Poligono::rotacao2D(double angulo) {
+		for (int x = 0; x < pontos.size(); x++) {
+				pontos[x].rotacao2D(angulo);
+			}
+	}
+
+UnicodeString Poligono::toString() {
+		return IntToStr(id) + "- tipo" + tipo + "-" +
+			IntToStr((int)pontos.size()) +
+			" pontos";
+	}

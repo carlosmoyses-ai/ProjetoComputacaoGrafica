@@ -1,0 +1,26 @@
+// ---------------------------------------------------------------------------
+
+#ifndef uRetaBresenhamH
+#define uRetaBresenhamH
+
+#include <algorithm>
+#include <math.h>
+#include <Vcl.ExtCtrls.hpp>
+// ---------------------------------------------------------------------------
+#endif
+
+using namespace std;
+
+class Bresenham {
+	public:
+		int px0, px1, py0, py1, pr, ax0, ax1, ay0, ay1;
+
+		Bresenham();
+		Bresenham(int x0, int y0, int x1, int y1);
+		Bresenham(int xc, int yc, int r);
+
+		void bresenhamX(TCanvas*canvas, int dx, int dy);
+		void bresenhamY(TCanvas*canvas, int dx, int dy);
+		void desenhaReta(TCanvas*canvas);
+		void desenhaCirc(TCanvas*canvas);
+	};

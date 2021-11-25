@@ -1,0 +1,79 @@
+// ---------------------------------------------------------------------------
+
+#pragma hdrstop
+
+#include "uCircBresenham.h"
+#include "uPoligono.h"
+// ---------------------------------------------------------------------------
+#pragma package(smart_init)
+
+Circunferencia::Circunferencia() {
+
+	}
+
+Circunferencia::Circunferencia(double x1, double y1, double x2, double y2) {
+		this->x1 = x1;
+		this->x2 = x2;
+		this->y1 = y1;
+		this->y2 = y2;
+	}
+
+int Circunferencia::getX1() {
+		return x1;
+	}
+
+int Circunferencia::getX2() {
+		return x2;
+	}
+
+int Circunferencia::getY1() {
+		return y1;
+	}
+
+int Circunferencia::getY2() {
+		return y2;
+	}
+
+void Circunferencia::distanciaEuclidiana(double x1, double y1, double x2,
+	double y2) {
+		double deltaXquadrado = pow((x2 - x1), 2);
+		double deltaYquadrado = pow((y2 - y1), 2);
+
+		this->raio = (int)(sqrt(deltaXquadrado + deltaYquadrado));
+	}
+
+void Circunferencia::pontosCirc(double x, double y, double xCentro,
+	double yCentro, Poligono*pol) {
+
+		pol->pontos.push_back(Ponto(xCentro + x, yCentro + y));
+		pol->pontos.push_back(Ponto(xCentro + x, yCentro - y));
+		pol->pontos.push_back(Ponto(xCentro - x, yCentro + y));
+		pol->pontos.push_back(Ponto(xCentro - x, yCentro - y));
+		pol->pontos.push_back(Ponto(xCentro + y, yCentro + x));
+		pol->pontos.push_back(Ponto(xCentro + y, yCentro - x));
+		pol->pontos.push_back(Ponto(xCentro - y, yCentro + x));
+		pol->pontos.push_back(Ponto(xCentro - y, yCentro - x));
+
+	}
+
+void Circunferencia::desenha(double x1, double y1, double x2, double y2,
+	Poligono*pol) {
+
+		distanciaEuclidiana(x1, y1, x2, y2);
+
+		double x = 0, y = raio, d = 3 - 2 * raio;
+
+		// pontosCirc(x, y, x1, y1, pol);
+
+		while (x <= y) {
+				if (d < 0) {
+						d += 4 * x + 6;
+					}
+				else {
+						d += 4*(x - y) + 10;
+						y--;
+					}
+				x++;
+				pontosCirc(x, y, x1, y1, pol);
+			}
+	}

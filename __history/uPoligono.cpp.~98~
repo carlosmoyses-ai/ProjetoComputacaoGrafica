@@ -1,0 +1,125 @@
+// ---------------------------------------------------------------------------
+
+#pragma hdrstop
+#include "uPoligono.h"
+#include "uReta.h"
+#include <math.h>
+#include "uCircBresenham.h"
+
+#define ABS(x) ((x < 0) ? -x : x)
+#define _SIGN_(x) ((x < 0) ? (-1) :(1))
+// ---------------------------------------------------------------------------
+#pragma package(smart_init)
+
+double xViewPortToMundo(int x, Janela mundo, Janela viewPort) {
+		return ((x - viewPort.Xmin) / (viewPort.Xmax - viewPort.Xmin)) *
+			(mundo.Xmax - mundo.Xmin) + mundo.Xmin;
+	}
+
+double yViewPortToMundo(int y, Janela mundo, Janela viewPort) {
+		return (1 - ((y - viewPort.Ymin) / (viewPort.Ymax - viewPort.Ymin))) *
+			(mundo.Ymax - mundo.Ymin) + mundo.Ymin;
+	}
+
+// -----------------------------------------------------------------------------
+// VARIAVEIS GLOBAIS
+// -----------------------------------------------------------------------------
+int px0 = 0, py0 = 0, px1 = 0, py1 = 0;
+DDA*retaDDA;
+Bresenham*retaBresenham;
+Circunferencia*circBresenham;
+Reta*reta;
+
+// -----------------------------------------------------------------------------
+// CALCULO DO PONTO X
+// -----------------------------------------------------------------------------
+void Poligono::desenha(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta) {
+		reta = new Reta(mundo, vp);
+		if (tipoReta == 0) {
+				// for (int x = 0; x < pontos.size(); x++) {
+				// canvas->Pen->Color =
+				// (tipo == 'E') ? clBlack :
+				// (tipo == 'N') ? clRed : clBlue;
+				//
+				// if (x == 0) {
+				// canvas->MoveTo(pontos[x].xViewPortToMundo(mundo,
+				// vp),
+				// pontos[x].yViewPortToMundo(mundo, vp));
+				// }
+				// else {
+				// canvas->LineTo(pontos[x].xViewPortToMundo(mundo,
+				// vp),
+				// pontos[x].yViewPortToMundo(mundo, vp));
+				// }
+				// }
+				reta->lineTo(canvas, pontos, clBlue);
+
+			}
+
+		if (tipoReta == 1) {
+				// for (int i = 1; i < pontos.size(); i++) {
+				// px0 = pontos[i - 1].xViewPortToMundo(mundo, vp);
+				// py0 = pontos[i - 1].yViewPortToMundo(mundo, vp);
+				//
+				// px1 = pontos[i].xViewPortToMundo(mundo, vp);
+				// py1 = pontos[i].yViewPortToMundo(mundo, vp);
+				//
+				// retaDDA = new DDA(px0, py0, px1, py1);
+				// retaDDA->desenhaDDA(canvas, (tipo == 'E') ? clBlack :
+				// (tipo == 'N') ? clRed : clBlue);
+				// }
+				reta->DDA(canvas, pontos, clBlue);
+			}
+		if (tipoReta == 2) {
+				// for (int i = 1; i < pontos.size(); i++) {
+				// px0 = pontos[i - 1].xViewPortToMundo(mundo, vp);
+				// py0 = pontos[i - 1].yViewPortToMundo(mundo, vp);
+				//
+				// px1 = pontos[i].xViewPortToMundo(mundo, vp);
+				// py1 = pontos[i].yViewPortToMundo(mundo, vp);
+				//
+				// retaBresenham = new Bresenham(px0, py0, px1, py1);
+				// retaBresenham->desenhaReta(canvas, (tipo == 'E') ?
+				// clBlack : (tipo == 'N') ? clRed : clBlue);
+				// }
+                reta->bresenham(canvas,pontos,clBlue);
+			}
+	}
+
+void Poligono::mostrar(TListBox*lbPontos) {
+		lbPontos->Clear();
+		for (int x = 0; x < pontos.size(); x++) {
+				lbPontos->Items->Add(pontos[x].toString());
+			}
+	}
+
+void Poligono::translada(double dx, double dy) {
+		for (int x = 0; x < pontos.size(); x++) {
+				pontos[x].translada(dx, dy);
+			}
+
+	}
+
+void Poligono::escalonamento(double dx, double dy) {
+		for (int x = 0; x < pontos.size(); x++) {
+				pontos[x].escalonamento(dx, dy);
+			}
+	}
+
+void Poligono::reflexao(double dx, double dy) {
+		for (int x = 0; x < pontos.size(); x++) {
+				pontos[x].translada(dx, dy);
+			}
+	}
+
+void Poligono::rotacao2D(double angulo) {
+		for (int x = 0; x < pontos.size(); x++) {
+				pontos[x].rotacao2D(angulo);
+			}
+	}
+
+UnicodeString Poligono::toString() {
+		return IntToStr(id) + "- tipo" + tipo + "-" +
+			IntToStr((int)pontos.size()) +
+			" pontos";
+	}

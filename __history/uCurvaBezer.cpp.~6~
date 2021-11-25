@@ -1,0 +1,24 @@
+// ---------------------------------------------------------------------------
+
+#pragma hdrstop
+
+#include "uCurvaBezer.h"
+// ---------------------------------------------------------------------------
+#pragma package(smart_init)
+
+
+CurvaBezer::CurvaBezer() {
+	}
+
+Ponto CurvaBezer::desenhaCurva(Ponto p1, Ponto p2, Ponto p3, Ponto p4, double t)
+{
+
+	Ponto p;
+	 double a1 = pow((1 - t), 3);
+	 double a2 = pow((1 - t), 2) * 3 * t;
+	 double a3 = 3 * t * t * (1 - t);
+	 double a4 = t * t * t;
+	 p.x = a1 * p1.x + a2 * p2.x + a3 * p3.x + a4 * p4.x;
+	 p.y = a1 * p1.y + a2 * p2.y + a3 * p3.y + a4 * p4.y;
+	return p;
+}

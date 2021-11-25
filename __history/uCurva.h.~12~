@@ -1,0 +1,34 @@
+// ---------------------------------------------------------------------------
+
+#ifndef uCurvaH
+#define uCurvaH
+
+#include <Vcl.StdCtrls.hpp>
+#include "uJanela.h"
+#include "uPonto.h"
+#include "uPoligono.h"
+#include <vector>
+// ---------------------------------------------------------------------------
+
+using namespace std;
+
+class Curva {
+	private:
+		Janela mundo;
+		Janela vp;
+
+	public:
+		Curva();
+		Curva(Janela mundo, Janela vp);
+		Poligono casteljau(Poligono pol);
+		Poligono casteljau3p(Ponto p0, Ponto p1, Ponto p2);
+		double calculaDistancia(double x1,double y1,double x2,double y2);
+		Poligono hermite(Poligono pol);
+		Poligono bezier(Poligono pol);
+		Poligono bspline(Poligono pol);
+        Poligono forward(Poligono pol);
+        void multiplicacaoMatrizCurvas(double matrizUm[][4],
+	double matrizDois[4][1], double matrizAuxiliar[][1], int matrizUmLinha);
+	};
+
+#endif

@@ -1,0 +1,29 @@
+// ---------------------------------------------------------------------------
+
+#pragma hdrstop
+
+#include "uDisplay.h"
+
+// ---------------------------------------------------------------------------
+#pragma package(smart_init)
+
+void DisplayFile::desenha(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta)
+	{
+		canvas->Brush->Color = clWhite;
+		canvas->FillRect(Rect(0, 0, 500, 500));
+		// canvas->Pen->Color = (tipo == 'E') ? clRed : clBlue;
+		canvas->Pen->Width = 1;
+		for (int x = 0; x < poligonos.size(); x++) {
+				canvas->Pen->Color =
+					(poligonos[x].tipo == 'E') ? clRed :
+					(poligonos[x].tipo == 'N') ? clBlue : clGreen;
+				poligonos[x].desenha(canvas, mundo, vp, tipoReta);
+			}
+	}
+
+void DisplayFile::mostrar(TListBox*lbPoligonos) {
+		lbPoligonos->Clear();
+		for (int x = 0; x < poligonos.size(); x++) {
+				lbPoligonos->Items->Add(poligonos[x].toString());
+			}
+	}

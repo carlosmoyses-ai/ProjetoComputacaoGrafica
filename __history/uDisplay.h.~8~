@@ -1,0 +1,20 @@
+// ---------------------------------------------------------------------------
+
+#ifndef uDisplayH
+#define uDisplayH
+#include "uPoligono.h"
+#include "uJanela.h"
+#include <Vcl.ExtCtrls.hpp>
+#include <vector>
+
+using namespace std;
+// ---------------------------------------------------------------------------
+
+class DisplayFile {
+public:
+	vector<Poligono> poligonos;
+
+	void desenha(TCanvas *canvas);
+};
+
+#endif

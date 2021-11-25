@@ -1,0 +1,16 @@
+// ---------------------------------------------------------------------------
+
+#ifndef uRetaH
+#define uRetaH
+
+#include <Vcl.StdCtrls.hpp>
+#include "uJanela.h"
+#include "uPonto.h"
+// ---------------------------------------------------------------------------
+
+class Reta {
+		void lineTo(TCanvas*canvas, Ponto pontos, TColor cor);
+		void DDA(TCanvas*canvas, Ponto pontos, TColor cor);
+		void bresenham(TCanvas*canvas, Ponto pontos, TColor cor);
+	};
+#endif

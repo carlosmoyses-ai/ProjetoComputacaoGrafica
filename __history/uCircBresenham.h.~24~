@@ -1,0 +1,41 @@
+// ---------------------------------------------------------------------------
+
+#ifndef uCircBresenhamH
+#define uCircBresenhamH
+
+#include "uPonto.h"
+#include "uPoligono.h"
+#include <vector>
+#include <Vcl.ExtCtrls.hpp>
+#include <math.h>
+// ---------------------------------------------------------------------------
+#endif
+
+using namespace std;
+
+class Circunferencia {
+	private:
+		int x1, y1;
+		int x2, y2;
+		int raio;
+		vector<Ponto>pontoCirc;
+
+	public:
+		Circunferencia();
+
+		Circunferencia(int x1, int y1, int x2, int y2);
+
+		int getX1();
+
+		int getX2();
+
+		int getY1();
+
+		int getY2();
+
+		int distanciaEuclidiana(int x1, int y1, int x2, int y2);
+
+		void pontosCirc(int x, int y, int xCentro, int yCentro, Poligono*pol);
+
+		void desenha(Poligono*pol);
+	};

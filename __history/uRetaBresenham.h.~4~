@@ -1,0 +1,16 @@
+// ---------------------------------------------------------------------------
+
+#ifndef uRetaBresenhamH
+#define uRetaBresenhamH
+// ---------------------------------------------------------------------------
+#endif
+
+class Bresenham {
+public:
+	double px0, px1, py0, py1;
+
+	Bresenham();
+	Bresenham(double x0, double y0, double x1, double y1);
+
+	void Bresenham::desenhaBresenham(TCanvas * canvas);
+};

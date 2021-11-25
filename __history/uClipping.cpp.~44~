@@ -1,0 +1,111 @@
+// ---------------------------------------------------------------------------
+
+#pragma hdrstop
+
+#include "uClipping.h"
+// ---------------------------------------------------------------------------
+#pragma package(smart_init)
+
+const int INSIDE = 0; // 0000
+const int LEFT = 1; // 0001
+const int RIGHT = 2; // 0010
+const int BOTTOM = 4; // 0100
+const int TOP = 8; // 1000
+
+int Clipping::cohenCodigo(Janela clipping, int x, int y) {
+		int codigo = 0;
+		if (x < clipping.Xmin)
+			codigo |= 1;
+		if (x > clipping.Xmax)
+			codigo |= 2;
+		if (y < clipping.Ymin)
+			codigo |= 4;
+		if (y > clipping.Ymax)
+			codigo |= 8;
+		return codigo;
+	}
+
+Poligono Clipping::cohenSutherlandClip(Janela clipping, Poligono pol)
+	{
+		Poligono aux;
+		Ponto p1, p2, Paux;
+		int code1, code2, M, code_out; ;
+		for (int i = 0; i < pol.pontos.size(); i++) {
+				p1 = pol.pontos[i];
+				p2 = pol.pontos[i + 1];
+				code1 = cohenCodigo(clipping, p1.x, p1.y);
+				code2 = cohenCodigo(clipping, p2.x, p2.y);
+
+					{
+						if ((code1 == 0) && (code2 == 0)) {
+								aux.pontos.push_back(p1);
+								aux.pontos.push_back(p2);
+							}
+						else if ((code1 & code2) == 0) {
+								// P1 = pontos[x];
+								// P2 = pontos[x + 1];
+								// M = (P2.y - P1.y) / (P2.x - P1.x);
+								if (code1 == 0) {
+										aux.pontos.push_back(p1);
+									}
+								else {
+										if ((code1 & 1) == 1) {
+										Paux.x = clipping.Xmin;
+										Paux.y =
+										M * (clipping.Xmin - p1.x) + p1.y;
+										aux.pontos.push_back(Paux);
+										}
+										else if ((code1 & 2) == 2) {
+										Paux.x = 100;
+										Paux.y = M * (100 - p1.x) + p1.y;
+
+										aux.pontos.push_back(Paux);
+										}
+										if ((code1 & 4) == 4) {
+										Paux.x = p1.x + (1 / M) * (-100 - p1.y);
+										Paux.y = -100;
+
+										aux.pontos.push_back(Paux);
+										}
+else
+										if ((code1 & 8) == 8) {
+										Paux.x = p1.x + (1 / M) * (100 - p1.y);
+										Paux.y = 100;
+										aux.pontos.push_back(Paux);
+										}
+									}
+								if (code2 == 0)
+									aux.pontos.push_back(p2);
+								else {
+										if ((code2 & 1) == 1) {
+										Paux.x = -100;
+										Paux.y = M * (-100 - P2.x) + p2.y;
+
+										pol.pontos.push_back(Paux);
+										}
+else
+										if ((code2 & 2) == 2) {
+										Paux.x = 100;
+										Paux.y = M * (100 - p2.x) + p2.y;
+										pol.pontos.push_back(Paux);
+										}
+										if ((code2 & 4) == 4) {
+										Paux.x = p2.x + (1 / M) * (-100 - p2.y);
+										Paux.y = -100;
+
+										pol.pontos.push_back(Paux);
+										}
+										else
+										if ((code2 & 8) == 8) {
+										Paux.x = p2.x + (1 / M) * (100 - p2.y);
+										Paux.y = 100;
+										pol.pontos.push_back(Paux);
+										}
+
+									}
+							}
+					}
+
+			}
+		return aux;
+	}

@@ -1,0 +1,15 @@
+// ---------------------------------------------------------------------------
+
+#ifndef uJanelaH
+#define uJanelaH
+// ---------------------------------------------------------------------------
+
+class Janela
+{
+public:
+	double Xmax, Xmin, Ymax, Ymin;
+
+	Janela(int winXmin, int winYmin, int winXmax, int winYmax);
+};
+
+#endif

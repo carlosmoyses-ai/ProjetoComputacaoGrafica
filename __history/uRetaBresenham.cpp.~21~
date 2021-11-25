@@ -1,0 +1,113 @@
+// ---------------------------------------------------------------------------
+
+#pragma hdrstop
+
+#include "uRetaBresenham.h"
+#include <algorithm>
+#include <math.h>
+#include <Vcl.ExtCtrls.hpp>
+// ---------------------------------------------------------------------------
+#pragma package(smart_init)
+
+#define _ABS_(x) ((x < 0) ? -x : x)
+#define _SIGN_(x) ((x < 0) ? -1 : 1)
+
+// ---------------------------------------------------------------------------
+
+#pragma package(smart_init)
+
+// ===============LINHAS RETAS BRESENHAM =====================================
+
+Bresenham::Bresenham() {
+	px0 = px1 = py0 = py1 = 0;
+}
+
+Bresenham::Bresenham(int x0, int y0, int x1, int y1) {
+	px0 = x0;
+	px1 = x1;
+	py0 = y0;
+	py1 = y1;
+}
+
+Bresenham::Bresenham(int xc, int yc, int r) {
+	ax0 = xc;
+	ax1 = yc;
+	pr = r;
+
+}
+
+
+void Bresenham::bresenhamX(TCanvas * canvas, int dx, int dy) {
+	int i, j, k;
+	i = 2 * dy - dx;
+	j = 2 * dy;
+	k = 2 * (dy - dx);
+
+	if (!(px0 < px1)) {
+		swap(px0, px1);
+		swap(py0, py1);
+	}
+	canvas->Pixels[floor(px0)][floor(py0)] = clRed;
+
+	while (px0 < px1) {
+		if (i < 0) {
+			i += j;
+		}
+		else {
+			if (py0 < py1) {
+				++py0;
+			}
+			else {
+				--py0;
+			}
+			i += k;
+		}
+		++px0;
+		canvas->Pixels[floor(px0)][floor(py0)] = clRed;
+	}
+
+}
+
+void Bresenham::bresenhamY(TCanvas * canvas, int dx, int dy) {
+	int i, j, k;
+	i = 2 * dx - dy;
+	j = 2 * dx;
+	k = 2 * (dx - dy);
+
+	if (!(py0 < py1)) {
+		swap(px0, px1);
+		swap(py0, py1);
+	}
+	canvas->Pixels[floor(px0)][floor(py0)] = clRed;
+
+	while (py0 < py1) {
+		if (i < 0) {
+			i += j;
+		}
+		else {
+			if (px0 > px1) {
+				--px0;
+			}
+			else {
+				++px0;
+			}
+			i += k;
+		}
+		++py0;
+		canvas->Pixels[floor(px0)][floor(py0)] = clRed;
+	}
+
+}
+
+void Bresenham::desenhaReta(TCanvas * canvas) {
+	int dx, dy, p, x, y;
+	dx = abs(px1 - px0);
+	dy = abs(py1 - py0);
+
+	if (dx >= dy) {
+		bresenhamX(TCanvas * canvas, int dx, int dy);
+	}
+	else {
+		bresenhamY(TCanvas * canvas, int dx, int dy);
+	}
+}

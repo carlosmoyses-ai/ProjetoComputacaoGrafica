@@ -1,0 +1,18 @@
+// ---------------------------------------------------------------------------
+
+#ifndef uClippingH
+#define uClippingH
+#include "uJanela.h"
+#include "uPonto.h"
+#include "uPoligono.h"
+#include <Vcl.ExtCtrls.hpp>
+#include <math.h>
+// ---------------------------------------------------------------------------
+
+class Clipping {
+	public:
+		int cohenCodigo(Janela clipping, int x, int y);
+		Poligono cohenSutherlandClip(Janela clipping, Poligono pol);
+	};
+
+#endif

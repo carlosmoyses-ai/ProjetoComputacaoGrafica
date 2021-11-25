@@ -1,0 +1,15 @@
+// ---------------------------------------------------------------------------
+
+#ifndef uCurvaBezerH
+#define uCurvaBezerH
+#include "uPonto.h"
+// ---------------------------------------------------------------------------
+#endif
+
+class CurvaBezer {
+public:
+	int px, py;
+	double t;
+
+	Ponto desenhaCurva(Ponto p1, Ponto p2, Ponto p3, Ponto p4, double t);
+};

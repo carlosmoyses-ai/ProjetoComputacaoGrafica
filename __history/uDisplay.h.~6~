@@ -1,0 +1,16 @@
+// ---------------------------------------------------------------------------
+
+#ifndef uDisplayH
+#define uDisplayH
+#include "uPoligono.h"
+#include <vector>
+
+using namespace std;
+// ---------------------------------------------------------------------------
+
+class DisplayFile {
+public:
+	vector<Poligono> poligonos;
+};
+
+#endif

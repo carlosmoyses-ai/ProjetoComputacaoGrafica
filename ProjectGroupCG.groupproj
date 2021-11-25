@@ -1,0 +1,36 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{4AE3202E-EEB1-4A5E-915B-A3DB9BD3C7DD}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="ComputacaoGrafica.cbproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="ComputacaoGrafica">
+        <MSBuild Projects="ComputacaoGrafica.cbproj"/>
+    </Target>
+    <Target Name="ComputacaoGrafica:Clean">
+        <MSBuild Projects="ComputacaoGrafica.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ComputacaoGrafica:Make">
+        <MSBuild Projects="ComputacaoGrafica.cbproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="ComputacaoGrafica"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="ComputacaoGrafica:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="ComputacaoGrafica:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

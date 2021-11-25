@@ -1,0 +1,36 @@
+// ---------------------------------------------------------------------------
+
+#ifndef uPontoH
+#define uPontoH
+
+#include "uJanela.h"
+#include <Vcl.ExtCtrls.hpp>
+// ---------------------------------------------------------------------------
+
+class Ponto {
+	public:
+		double x, y;
+
+		int etapas, deltaX, deltaY;
+
+		Ponto();
+
+		Ponto(double pontoX, double pontoY);
+
+		UnicodeString toString();
+
+		int xViewPortToMundo(Janela mundo, Janela viewPort);
+
+		int yViewPortToMundo(Janela mundo, Janela viewPort);
+
+		void translada(double dx, double dy);
+
+		void reflexao(double dx, double dy);
+
+		void escalonamento(double dx, double dy);
+
+		void rotacao2D(double angulo);
+
+	};
+
+#endif
